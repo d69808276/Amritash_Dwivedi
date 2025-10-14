@@ -7,6 +7,22 @@ This is Spring with hibernate xml schema
         xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"> <!-- bean definitions here -->
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+  <!-- bean definitions here -->
 
+<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dmDataSource" >  { DriverManagerDataSource jb hum main ne type karenge to to import hoga us import ko copy kr lenge or yaha past kr dnege)
+  <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+   <property name="url" value="jdbc:mysql://localhost:3306/spring_hibernate_dn" />
+   <property name="username" value="root" />
+   <property name="password" value="root@100" /?
+</bean>
+
+<bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" id="mySessionfactory">  { hum main file me jaa k LocalSessionFactoryBean l = new LocalSessionFactoryBean() type karenge to uper import hoga us
+                                                                                  import ko copy kr lena hai or past kr dena hai jaise ( import org.springframework.orm.hibernate5.LocalSessionFactoryBean kr k aaega )}
+ <property name="dataSource" value="dmDataSource" />
+ <property name="hibernateProperties" >
+     <props> 
+          <prop key="hibernate.hbm2ddl.auto">update</prop>
+           <prop key="hibernate.show_sql">true</prop>
+           <prop key="hibernate.format_sql">true</prop>
 </beans>
