@@ -1,0 +1,80 @@
+interface StudentDao
+{
+public void addStdDetails(Student std);
+public void updateStdDetails(Student std);
+public void deleteStdDetails(Student std);
+public void searchStdDetails(int id);
+}
+
+public class StudentDaoImpl implement StudentDao 
+{
+  private HibernateTemplate hibernateTemplate;
+  public void setHibernateTemplate(HibernateTemplate hibernateTemplate){
+  this.hibernateTemplate =hibernateTemplate;
+
+@Transactional
+@Override
+public void addStdDetails(Student std)
+{
+   try
+   {
+        hibernateTemplate.save(std);
+        syso("success");
+   }
+   catch(Exception ex)
+   {
+    syso("fail");
+    ex.printStackTrace();
+   }
+}
+
+@Transactional
+@Override
+public void updateStdDetails(Student std)
+{
+   try
+   {
+        hibernateTemplate.update(std);
+        syso("success");
+   }
+   catch(Exception ex)
+   {
+    syso("fail");
+    ex.printStackTrace();
+   }
+}
+
+@Transactional
+@Override
+public void deleteStdDetails(Student std)
+{
+   try
+   {
+        hibernateTemplate.delete(std);
+        syso("success");
+   }
+   catch(Exception ex)
+   {
+    syso("fail");
+    ex.printStackTrace();
+   }
+}
+
+
+@Override
+public void searchStdDetails(int id)
+{
+   try
+   {
+        Student std =(Student) hibernateTemplate.get(Student.class, id);
+        syso("success");
+        System.out.println("Name :" + std.getName());
+        System.out.println("Name :" + std.getrollno());
+        System.out.println("Name :" + std.getcity());
+   }
+   catch(Exception ex)
+   {
+    syso("fail");
+    ex.printStackTrace();
+   }
+}
