@@ -19,7 +19,7 @@ This is Spring with hibernate xml schema
 
 <bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" id="mySessionfactory">  { hum main file me jaa k LocalSessionFactoryBean l = new LocalSessionFactoryBean() type karenge to uper import hoga us
                                                                                   import ko copy kr lena hai or past kr dena hai jaise ( import org.springframework.orm.hibernate5.LocalSessionFactoryBean kr k aaega )}
- <property name="dataSource" value="dmDataSource" />
+ <property name="dataSource" ref="dmDataSource" />
  <property name="hibernateProperties" >
      <props> 
            <prop key="hibernate.hbm2ddl.auto">update</prop>
@@ -34,7 +34,8 @@ This is Spring with hibernate xml schema
                 </list>
  </property>
 
-<bean class="org.springframework.orm.hibernate5.HibernateTransactionManager" id="myTransactionManager" > // hum jis class ka ko import krna hai sb ka obj create kr k karenge class me 
+<tx:annotation-driven/>
+<bean class="org.springframework.orm.hibernate5.HibernateTransactionManager" id="transactionManager" > // hum jis class ka ko import krna hai sb ka obj create kr k karenge class me 
   <property name="sessionFactory" ref="mySessionFactory" />
 </bean>
 
