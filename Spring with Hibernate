@@ -28,9 +28,23 @@ This is Spring with hibernate xml schema
      </props>
   </property>
 
- <property name="mappingReseuces"> // mappingResources ka m hmesha small hoga
+ <property name="mappingReseuces">                                               // mappingResources ka (m) hmesha small hoga
                 <list>
                   <value>/in/sp/resources/student.hbm.xml</value>
                 </list>
  </property>
+
+<bean class="org.springframework.orm.hibernate5.HibernateTransactionManager" id="myTransactionManager" > // hum jis class ka ko import krna hai sb ka obj create kr k karenge class me 
+  <property name="sessionFactory" ref="mySessionFactory" />
+</bean>
+
+<bean class="org.springframework.orm.hibernate5.HibernateTemplate" id="myHibernateTemplate" >
+  <property name="sessionFactory" ref="mySessionFactory" />
+</bean> 
 </beans>
+
+
+**hum ne yaha pe 3 classes ka object create kiya hai
+1. LocalSessionFactoryBean.
+2. HibernateTransactionManager.
+3. HibernateTemplate.
