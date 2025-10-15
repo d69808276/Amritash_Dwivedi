@@ -1,0 +1,102 @@
+
+
+@Configuration
+@EnableTransactionManagement // <tx:annotation-driven/>
+public class SprinfConfigFile
+{
+
+@Bean
+public DriverManagerDataSource dmDataSource()
+{
+     DriverManagerDataSource dmDataSource = new DriverManagerDataSource();
+      dmDataSource.setDriverClassName("com.mysql.cj/jdbc.Driver");
+      dmDataSource.setUrl("jdbc:mysql://localhost:3306/spring_hibernate_DB")
+      dmDataSource.setUsername("root");
+      dmDataSource.setPassword("root@");
+
+      return dmDataSource;
+}
+
+@Bean
+public LocalSessionFactoryBean mySessionFactory()
+{
+   LocalSessionFactoryBean mySessionFactory = new LocalSessionFactoryBean();
+    mySessionFactory.setDataSource(dmDataSource());
+
+    Properties hibernateProperties = new Properties();
+    hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
+    hibernateProperties.setProperty("hibernate.show_sql","true");
+    hibernateProperties.setProperty("hibernate.format_sql","true");
+    mySessionFactory.setHibernateProperties(hibernateProperties);
+
+   //MappingResources
+    mySessionFactory.setMappingResources("/in/sp/resources/student.hbm.xml");
+
+    return mySessionFactory;
+}
+
+@Bean
+public HibernateTransactionManager trasactionManager()
+{
+    HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+    transactionManager.setSessionFactory(mySessionFactory().getObject());
+    return transactionManager;
+}
+
+@Bean
+public HibernateTemplate myHibernateTemplate()
+{
+   HibernateTemplate hibernateTemplate =new HibernateTemplate();
+   hibernateTemplate.setSessionfactory(mySessionFactory().getObject());
+   return hibernateTemplate;
+}
+
+@Bean 
+public StudentDao stdDaoImplBean(){
+      StudentDaoImpl stdDaoImpl = new StudentDaoImpl();
+      stdDaoImpl.setHibernateTemplate(myHibernateTemplate());
+      return stdDaoImpl;
+}
+
+-----------------------------------------------------------------------------------------------------------------
+public class App
+{
+   Public static void main(String[], arg)
+   {
+
+     StudentDao stdDao = new StudentDao();
+     stdDao.setStdid(01);
+     stdDao.setname("Atul");
+     stdDao.setrollno(152);
+     stdDao.setcity("Bhopal");
+
+    ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfigFile.class)
+        StudentDao stdDao = (StudentDao) context.getBean("stdDaoImplBean");
+        StudentDao.addStdDetails(std);
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
