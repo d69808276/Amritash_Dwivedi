@@ -28,7 +28,7 @@ This is Spring with hibernate xml schema
      </props>
   </property>
 
- <property name="mappingReseucec"
+ <property name="mappingReseuces"> // mappingResources ka m hmesha small hoga
                 <list>
                   <value>/in/sp/resources/student.hbm.xml</value>
                 </list>
