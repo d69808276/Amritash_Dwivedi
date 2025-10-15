@@ -41,6 +41,10 @@ This is Spring with hibernate xml schema
 <bean class="org.springframework.orm.hibernate5.HibernateTemplate" id="myHibernateTemplate" >
   <property name="sessionFactory" ref="mySessionFactory" />
 </bean> 
+
+<bean class="com.sm.dao.StudentDaoImpl" id="stdDaoImplBean" >
+    <property name="hibernateTemplate" ref="myHibernateTemplate" />
+</bean>
 </beans>
 
 
