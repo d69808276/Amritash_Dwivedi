@@ -60,19 +60,66 @@ package in.sp.resource
           </persistance-unit>
 
     </persistence>
-  
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
+7. Create main class and execute the application
+in.sp.main
 
+public class App{
+ public static void main(String[], arg)
+{
+      Student std = new Student();
+      std.setId(1);
+      std.setName("AD");
+      std.setrollno(11);
+      std.setemail("ad@gmail.com");
+ 
+    =>  EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("main-persistance-unit");      
+    =>  EntityManager entityManager = entityManagerFactory.createEntityManger();
+    =>  EntityTransaction entityTransaction = entityManager.getTransaction();
+       try
+        {
+          entityTransaction.begin();
+          entityManager.persist(std);
+          entityTransaction.commit();
+          System.out.println("Success");
+        }
+        catch(Exception ex)
+          {
+            ex.prinr=tStackTrace();
+            entityTransaction.rollback();
+            System.out.println("fail");
+         }
+         finally
+          {
+             entityManager.close();
+             entityManagerFactory.close();
+          }
+      }
+ }       
 
+7.   Create main class and execute the application
+7.1. Create EntityManagerFactory Object
+   EntityManagerFactory emf = Persistence.createEntityManagerFactory("main-persistance-unit");
 
+7.2. Create EntityManger Object 
+    =>  EntityManager em = emf.createEntityManger();
 
+7.3. Create EntityTransaction object and begin the transaction 
+    =>  EntityTransaction entityTransaction = em.getTransaction();
 
+7.4. // Perform Database Operations using EntityManager instance
+           ->Insert operation
+                  = persist();
+           -> Retrival operation
+                 = find();
+           -> update operation
+                 = merge();
+           -> Delete operation
+                 = remove();
 
-
-
-
-
-
+8. Commit the transaction
+9. Close the resource
 
 
 
