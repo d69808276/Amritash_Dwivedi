@@ -1,0 +1,89 @@
+1. Add Dependency - 1.Javax Persistence API » 2.2, 
+                    2.Hibernate Core,
+                    3.MySQL Connector Java
+
+2. Create POJO classes
+    package in.sp.entity
+
+public class Student {
+ private int id;
+ private String name;
+ private  String email;
+ private float marks
+//getter and setter
+}
+
+3. create mapping file
+package in.sp.resource
+    student.xml
+
+     <!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+     <class name="in.sp.entity.Student" table="std_marks" >
+          <id name="id" column="std_id" />
+          <property name="name" column="std_name" />
+          <property name="email" column="std_email" />
+          <property name="marks" column="std_marks" />
+</hibernate-mapping>
+
+4. Create Persistence Unit Configuration (Persistance.xml) in META-INF folder
+ create folder src/main/resource 
+   |-> META-INF (folder)
+           |-> Persistence.xml
+    (Java Persistance API -  XML schemas  goto --->  persistence_2_2.xsd and download this file open in notepad and copy karo jo niche diya schema hai )===========>>>>>
+   <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+          http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+        version="2.2">
+        <persistance-unit name="main-persistance-unit">
+
+              <mapping-file>in/sp/resources/student.xml</mapping-file>
+
+(yaha pe 2 properties aaengi 1. database properties or 2 hibernate wali properties )
+              <properties> 
+                      //Database properties
+                         <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+                         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jpa_db" />        //   (jpa_db ye database name hai database ka jaa k create karo phle)
+                         <property name="javax.persistence.jdbc.username" value="root" />
+                         <property name="javax.persistence.jdbc.password" value="root@100" />
+
+                     //Hibernate Properties
+
+                        <property name="hibernate.hbm2ddl.auto" value="update" />
+                        <property name="hibernate.show_sql" value="true" />
+             </properties>
+
+          </persistance-unit>
+
+    </persistence>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
