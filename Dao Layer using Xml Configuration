@@ -78,3 +78,5 @@ public void searchStdDetails(int id)
     ex.printStackTrace();
    }
 }
+
+banki ka code spring with hibernate me hai student, main
