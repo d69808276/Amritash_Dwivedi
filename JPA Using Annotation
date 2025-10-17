@@ -1,4 +1,4 @@
-Annotation based program sirf 3 hi file hongi 
+Annotation based program me sirf 3 (Student, Persistence.xml, Or main(-)) hi file hongi 
 (hum yaha annotation k through mapping kr rhe hain )
 
 @Entity
@@ -85,4 +85,111 @@ public class App{
           }
       }
  }       
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+find()
+
+ method banki sb same rahega sirf App main() method me chnages rahenge eme transaction part use nhi hoga
+ public static void main(String[], arg)
+{
+ =>  EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("main-persistance-unit");      
+    =>  EntityManager entityManager = entityManagerFactory.createEntityManger();
+
+
+try
+        {
+          Student std =new entityManager.find(Student.class,2)
+          System.out.println(std.getName());
+          System.out.println(std.getEmail());
+          System.out.println(std.getMarks());
+        }
+        catch(Exception ex)
+          {
+            ex.prinr=tStackTrace();
+          
+            System.out.println("fail");
+         }
+         finally
+          {
+             entityManager.close();
+             entityManagerFactory.close();
+          }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------
+Update()
+
+ public static void main(String[], arg)
+{
+    =>  EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("main-persistance-unit");      
+    =>  EntityManager entityManager = entityManagerFactory.createEntityManger();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        try
+        {
+          entityTransaction.begin();
+          Student std =new entityManager.find(Student.class,2)
+          std.setMarks(87.8f);<===========================
+         // entityManager.merge(std);  // no need beause entity will be updated automatically when we use setter method 
+          entityTransaction.commit();
+          System.out.println("success");
+        }
+        catch(Exception ex)
+          {
+            ex.prinr=tStackTrace();
+            entityTransaction.rollback();
+            System.out.println("fail");
+         }
+         finally
+          {
+             entityManager.close();
+             entityManagerFactory.close();
+          }
+}
+----------------------------------------------------------------------------------------------------------------------------------
+Delete();
+
+ public static void main(String[], arg)
+   {
+    =>  EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("main-persistance-unit");      
+    =>  EntityManager entityManager = entityManagerFactory.createEntityManger();
+
+        try
+         {
+          Student std =new entityManager.find(Student.class,2)
+          entityManager.remove(std);
+          entityTransaction.commit();
+          System.out.println("success");
+         }
+        catch(Exception ex)
+          {
+            ex.prinr=tStackTrace();
+            entityTransaction.rollback();
+            System.out.println("fail");
+         }
+         finally
+          {
+             entityManager.close();
+             entityManagerFactory.close();
+          }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
