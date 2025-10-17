@@ -2,7 +2,7 @@
                     2.Hibernate Core,
                     3.MySQL Connector Java
 
-2. Create POJO classes
+4. Create POJO classes
     package in.sp.entity
 
 public class Student {
@@ -12,8 +12,8 @@ public class Student {
  private float marks
 //getter and setter
 }
-
-3. create mapping file
+------------------------------------------------------------------------------------------------------------------------------
+5. create mapping file
 package in.sp.resource
     student.xml
 
@@ -28,8 +28,8 @@ package in.sp.resource
           <property name="email" column="std_email" />
           <property name="marks" column="std_marks" />
 </hibernate-mapping>
-
-4. Create Persistence Unit Configuration (Persistance.xml) in META-INF folder
+-------------------------------------------------------------------------------------------------------------------------------
+6. Create Persistence Unit Configuration (Persistance.xml) in META-INF folder
  create folder src/main/resource 
    |-> META-INF (folder)
            |-> Persistence.xml
