@@ -1,5 +1,6 @@
 This is Spring with hibernate xml schema
-
+package com.sm.resource --> applicationContext.xml
+-------------------------------------------------------------------------------------
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -48,8 +49,27 @@ This is Spring with hibernate xml schema
 </bean>
 </beans>
 
-
+----------------------------------------------------------------
 **hum ne yaha pe 3 classes ka object create kiya hai
 1. LocalSessionFactoryBean.
 2. HibernateTransactionManager.
 3. HibernateTemplate.
+---------------------------------------------------------------------------------------------------------------------------
+{  ye 4. creating applicationContext.xml  program spring with hibernate ka xml based config ka program h using DAO layer} 
+-*--------------------------------------------------------------------------------------------------------------------------
+
+main(-){
+ Student std = new Student();
+ std.setId(01)
+ std.setname("RD");
+ std.setrollno(110);
+
+ApplicationContext context = new ClassPathXmlApplicationContext("/com/sm/resource/applicationContext.xml");
+StudentDao stdDao= (StudentDao) context.getBean("stdDaoImplBean");
+stdDao.addStdDetails(std);
+
+
+
+
+
+
