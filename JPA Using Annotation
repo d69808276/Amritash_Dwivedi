@@ -1,0 +1,88 @@
+Annotation based program sirf 3 hi file hongi 
+(hum yaha annotation k through mapping kr rhe hain )
+
+@Entity
+@Table(name="std_marks")
+ public class Student {
+
+ @Id
+ @Column(name="std_id")
+ private int id;
+
+ @Column(name="std_name")
+ private String name;
+
+ @Column(name="std_email")
+ private  String email;
+
+ @Column(name="std_marks")
+ private float marks
+
+  //getter and setter
+}
+----------------------------------------------------------------------------------------
+ Create Persistence Unit Configuration (Persistance.xml) in META-INF folder
+ create folder src/main/resource 
+   |-> META-INF (folder)
+           |-> Persistence.xml
+    (Java Persistance API -  XML schemas  goto --->  persistence_2_2.xsd and download this file open in notepad and copy karo jo niche diya schema hai )===========>>>>>
+   <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+          http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+        version="2.2">
+        <persistance-unit name="main-persistance-unit">
+
+-*------------yaha se humne mapping part remove kr diya hai-----------*-             
+(yaha pe 2 properties aaengi 1. database properties or 2 hibernate wali properties )
+              <properties> 
+                      //Database properties
+                         <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+                         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jpa_db" />        //   (jpa_db ye database name hai database ka jaa k create karo phle)
+                         <property name="javax.persistence.jdbc.username" value="root" />
+                         <property name="javax.persistence.jdbc.password" value="root@100" />
+
+                     //Hibernate Properties
+
+                        <property name="hibernate.hbm2ddl.auto" value="update" />
+                        <property name="hibernate.show_sql" value="true" />
+             </properties>
+
+          </persistance-unit>
+
+    </persistence>
+
+-------------------------------------------------------------------------------------------------------------------
+public class App{
+ public static void main(String[], arg)
+{
+      Student std = new Student();
+      std.setId(1);
+      std.setName("AD");
+      std.setrollno(11);
+      std.setemail("ad@gmail.com");
+ 
+    =>  EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("main-persistance-unit");      
+    =>  EntityManager entityManager = entityManagerFactory.createEntityManger();
+    =>  EntityTransaction entityTransaction = entityManager.getTransaction();
+       try
+        {
+          entityTransaction.begin();
+          entityManager.persist(std);
+          entityTransaction.commit();
+          System.out.println("Success");
+        }
+        catch(Exception ex)
+          {
+            ex.prinr=tStackTrace();
+            entityTransaction.rollback();
+            System.out.println("fail");
+         }
+         finally
+          {
+             entityManager.close();
+             entityManagerFactory.close();
+          }
+      }
+ }       
+
