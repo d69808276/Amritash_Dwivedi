@@ -1,4 +1,17 @@
-interface StudentDao
+Spring Application + DAO
+1. Student (POJO class) 
+2. Mapping file 
+     - package com.sp.resource
+          - (Student.hbm.xml) => provide Hibernate Mapping 
+       
+3. DAO Layer
+      - Interface StudentDao
+      - StudentDaoImpl
+4. Spring Configuration File
+      - applicationContext.xml => 
+5. Main class
+-------------------------------------------------------------------------------------------
+Interface StudentDao
 {
 public void addStdDetails(Student std);
 public void updateStdDetails(Student std);
