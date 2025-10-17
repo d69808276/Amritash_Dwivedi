@@ -143,14 +143,38 @@ public class StudentDaoImpl implements StudentDao
       }
    }
 
+   @Transactional
    @Override
    public void updateStudent(int id, float marks)
    {
+      try
+       {  
+         Studnet std = entityManager.find(Student.class,id);
+         std.setMarks(Marks);
+         System.out.println("update Successfullly")
+      }
+      catch(EXception ex)
+      {
+       System.out.println("update fail");
+       e.printStackTrace();
+      }
    }
 
+   @Transactional
    @Override
    public void deleteStudent(int id)
    {
+      try
+       {  
+         Studnet std = entityManager.find(Student.class,id);
+         std.remove(std);
+         System.out.println("Delete Successfully")
+      }
+      catch(EXception ex)
+      {
+       System.out.println("Delete fail");
+       e.printStackTrace();
+      }
    }
 }
 ------------------------------------------------------------------------------------------------------------------------------------------
