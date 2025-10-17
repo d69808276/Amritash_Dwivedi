@@ -54,9 +54,9 @@ package com.sm.resource --> applicationContext.xml
 1. LocalSessionFactoryBean.
 2. HibernateTransactionManager.
 3. HibernateTemplate.
----------------------------------------------------------------------------------------------------------------------------
-{  ye 4. creating applicationContext.xml  program spring with hibernate ka xml based config ka program h using DAO layer} 
--*--------------------------------------------------------------------------------------------------------------------------
+ ---------------------------------------------------------------------------------------------------------------------------
+| {  ye 4. creating applicationContext.xml  program spring with hibernate ka xml based config ka program h using DAO layer}  |
+ -*-------------------------------------------------------------------------------------------------------------------------
 
 main(-){
  Student std = new Student();
