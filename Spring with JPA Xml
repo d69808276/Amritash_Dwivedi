@@ -1,0 +1,246 @@
+in.sp.entity
+
+@Entity
+@Table(name="std_details")
+public class Student
+{
+    @Id
+    @Column(name="std_id")
+    private int id;
+
+    @Column(name="std_name")
+    private String name;
+
+    @Column(name="std_rollno")
+    private int rollno;
+    @Column(name="std_marks")
+    private float marks;
+   //getter and setter
+}
+
+-------------------------------------------------------------------------------+
+package in.sp.resource
+               -appliationContext.xm (file)
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"                 //40.2.8 the context schema
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd"
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">   //40.2.8 the context schema
+
+
+  <context:annotation-config/>
+    <!-- bean definitions here -->
+     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dmDataSource"> 
+              <porperty name="DriverClassName" value="com.mysql.cj.jdbc.Driver" />
+              <porperty name="url" value="jdbc:mysql://localhost:3306/Spring_jpa" />
+              <porperty name="username" value="root" />
+              <porperty name="password" value="root@100" />
+     </bean>   
+
+     <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="LcEntityManagerFactoryBean"> 
+              <porperty name="dataSource" ref="dmDataSource" />
+              <porperty name="packagesToScan"> 
+                    <list>
+                        <value>in.sp.entity</value>
+                    </list>
+              </property>
+
+               <porperty name="jpaVendorAdapter"> 
+                      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" > 
+              </property>
+
+               <porperty name="jpaProperties"> 
+                         <props>
+                              <prop key="hibernate.hbm2ddl.auto">update</prop>
+                              <prop key="hibernate.show_sql">true</prop>
+                         </props>
+               </property>
+     </bean>  
+
+    <bean class"in.sp.dao.StudentDaoImpl" id="stdDaoImpl"?>
+</beans>
+--------------------------------------------------------------------------------------------------------
+package in.sp.dao
+     |-> StudentDao
+
+interface StudentDao
+{
+   public void searchStudent(int id); 
+
+}
+
+public class StudentDaoImpl implements StudentDao
+{
+   @PersistenceContext  // entityManager k ander hum value inject krane k liye  @PersistenceContext ka use krte hain
+   private EntityManager entityManager;
+
+   @Override
+   public void searchStudent(int id)
+   {
+      Student std = entityManager.find(Student.class, id);
+      System.out.println("----------------------------");
+      System.out.println("Name :"+ std.getName());
+      System.out.println("Rollno :"+ std.getRollno());
+   }
+}
+-----------------------------------------------------------------------------------------------------
+
+main(-)
+{
+ ApllicationContext context = new ClassPathXmlApplicationContext("/in/sp/resource/applicationContext.xml");
+                StudentDao stdDao =(StudentDao)context.getBean("context");
+             stdDao.searchStudent(2);
+
+}
+=========================================================================================================================================================================================================================
+
+
+
+CRUD (banki sb kuch same rahega jo jo changes hai wo niche hai add
+
+package in.sp.dao
+     |-> StudentDao
+
+interface StudentDao
+{
+   public void searchStudent(int id); 
+   public void insertStudent(Student std);
+   public void updateStudent(int id, float marks);
+   public void deleteStudent(int id);
+}
+
+public class StudentDaoImpl implements StudentDao
+{
+   @PersistenceContext  // entityManager k ander hum value inject krane k liye  @PersistenceContext ka use krte hain
+   private EntityManager entityManager;
+
+   @Override
+   public void searchStudent(int id)
+   {
+      Student std = entityManager.find(Student.class, id);
+      System.out.println("----------------------------");
+      System.out.println("Name :"+ std.getName());
+      System.out.println("Rollno :"+ std.getRollno());
+   }
+
+   @Transactional  // xml file jaa  update or add <tx:annotation-driven/> krna hoga
+   @Override
+   public void insertStudent(Student std)
+   {
+      try
+       {  
+         entityManager.persist(std);
+         System.out.println("Successfullly")
+      }
+      catch(EXception ex)
+      {
+       System.out.println("Insertion fail");
+       e.printStackTrace();
+      }
+   }
+
+   @Override
+   public void updateStudent(int id, float marks)
+   {
+   }
+
+   @Override
+   public void deleteStudent(int id)
+   {
+   }
+}
+------------------------------------------------------------------------------------------------------------------------------------------
+package in.sp.resource
+               -appliationContext.xm (file)
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"                 //40.2.8 the context schema
+   xmlns:tx="http://www.springframework.org/schema/tx"              //40.2.6 the tx (transaction) schema isko tb add karenge jb hum insertion k liye transactional ka use karenge
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd"
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"   //40.2.8 the context schema
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd>   
+
+
+  <context:annotation-config/>
+   <tx:annotation-driven/> 
+    <!-- bean definitions here -->
+     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dmDataSource"> 
+              <porperty name="DriverClassName" value="com.mysql.cj.jdbc.Driver" />
+              <porperty name="url" value="jdbc:mysql://localhost:3306/Spring_jpa" />
+              <porperty name="username" value="root" />
+              <porperty name="password" value="root@100" />
+     </bean>   
+
+     <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="LcEntityManagerFactoryBean"> 
+              <porperty name="dataSource" ref="dmDataSource" />
+              <porperty name="packagesToScan"> 
+                    <list>
+                        <value>in.sp.entity</value>
+                    </list>
+              </property>
+
+               <porperty name="jpaVendorAdapter"> 
+                      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" > 
+              </property>
+
+               <porperty name="jpaProperties"> 
+                         <props>
+                              <prop key="hibernate.hbm2ddl.auto">update</prop>
+                              <prop key="hibernate.show_sql">true</prop>
+                         </props>
+               </property>
+     </bean>  
+
+    <bean class"in.sp.dao.StudentDaoImpl" id="stdDaoImpl"?>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
