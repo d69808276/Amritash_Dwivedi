@@ -31,8 +31,10 @@ Annotation based program me sirf 3 (Student, Persistence.xml, Or main(-)) hi fil
         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
         version="2.2">
-        <persistance-unit name="main-persistance-unit">
 
+  <persistance-unit name="main-persistance-unit">
+ 
+ 
 -*------------yaha se humne mapping part remove kr diya hai-----------*-             
 (yaha pe 2 properties aaengi 1. database properties or 2 hibernate wali properties )
               <properties> 
