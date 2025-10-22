@@ -1,5 +1,36 @@
+In this Crud operation there are 4 packages using dao layer 
+1. package in.sp.beans 
+      - Student
+2. DAO Layer (package- in.sp.dao )
+      - Interface StudentDao
+      - StudentDaoImpl
+3. Spring Configuration File (package- in.sp.resource )
+      - SprinfConfigFile
+4. Main class (package - in.sp.main)
+      - App 
+---------------------------------------------------------
+package in.sp.beans 
 
+@Entity
+@Table(name="std_register")
+public class Student
+{
+     @ID
+     @Column(name="std_id")
+     private int stdid;
 
+     @Column(name="std_name")
+     private String name;
+
+     @Column(name="std_rollno")
+     private int rollno;
+
+ //getter and setter 
+}
+
+Dao-->> Dao layer se banki code le len (Amritash_Dwivedi/Dao Layer)
+-------------------------------------------------------------------------------------------------------------------
+in.sp.resource
 @Configuration
 @EnableTransactionManagement // <tx:annotation-driven/>
 public class SprinfConfigFile
@@ -30,8 +61,9 @@ public LocalSessionFactoryBean mySessionFactory()
     mySessionFactory.setHibernateProperties(hibernateProperties);
 
    //MappingResources
-    mySessionFactory.setMappingResources("/in/sp/resources/student.hbm.xml");
+        //  mySessionFactory.setMappingResources("/in/sp/resources/student.hbm.xml");//agar xml file k through mapping krte tb use hoga
 
+   mySessionFactory.setPackagesToScan("in.sp.beans");
     return mySessionFactory;
 }
 
@@ -64,15 +96,19 @@ public class App
    Public static void main(String[], arg)
    {
 
-     StudentDao stdDao = new StudentDao();
-     stdDao.setStdid(01);
-     stdDao.setname("Atul");
-     stdDao.setrollno(152);
-     stdDao.setcity("Bhopal");
+     StudentDao std = new StudentDao();
+     std.setStdid(01);
+     std.setname("Atul");
+     std.setrollno(152);
+     std.setcity("Bhopal");
 
     ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfigFile.class)
         StudentDao stdDao = (StudentDao) context.getBean("stdDaoImplBean");
-        StudentDao.addStdDetails(std);
+        stdDao.addStdDetails(std);
+
+    //stdDao.updatestdDetails(std);
+    // stdDao.searchStdDetails(2);
+   // stdDao.deleteStdDetails(Std);
    }
 }
 
