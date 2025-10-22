@@ -1,0 +1,183 @@
+1. package in.sp.entity
+        -> Student class
+2. package in.sp.dao
+       |-> StudentDao
+       |-> StudentDaoImpl
+3. package in.sp.resource
+        -> SpringConfigFile
+4. package in.sp.main
+        -> App
+
+----------------------------------------------------------------------------------------------------------------
+in.sp.entity
+
+@Entity
+@Table(name="std_details")
+public class Student
+{
+    @Id
+    @Column(name="std_id")
+    private int id;
+
+    @Column(name="std_name")
+    private String name;
+
+    @Column(name="std_rollno")
+    private int rollno;
+    @Column(name="std_marks")
+    private float marks;
+   //getter and setter
+}
+-------------------------------------------------------------------------------------------------------------------
+
+
+package in.sp.dao
+     |-> StudentDao
+
+interface StudentDao
+{
+   public void searchStudent(int id); 
+   public void insertStudent(Student std);
+   public void updateStudent(int id, float marks);
+   public void deleteStudent(int id);
+}
+
+public class StudentDaoImpl implements StudentDao
+{
+   @PersistenceContext  // entityManager k ander hum value inject krane k liye  @PersistenceContext ka use krte hain
+   private EntityManager entityManager;
+
+   @Override
+   public void searchStudent(int id)
+   {
+      Student std = entityManager.find(Student.class, id);
+      System.out.println("----------------------------");
+      System.out.println("Name :"+ std.getName());
+      System.out.println("Rollno :"+ std.getRollno());
+   }
+
+   @Transactional  // xml file jaa  update or add <tx:annotation-driven/> krna hoga
+   @Override
+   public void insertStudent(Student std)
+   {
+      try
+       {  
+         entityManager.persist(std);
+         System.out.println("Successfullly")
+      }
+      catch(EXception ex)
+      {
+       System.out.println("Insertion fail");
+       e.printStackTrace();
+      }
+   }
+
+   @Transactional
+   @Override
+   public void updateStudent(int id, float marks)
+   {
+      try
+       {  
+         Studnet std = entityManager.find(Student.class,id);
+         std.setMarks(Marks);
+         System.out.println("update Successfullly")
+      }
+      catch(EXception ex)
+      {
+       System.out.println("update fail");
+       e.printStackTrace();
+      }
+   }
+
+   @Transactional
+   @Override
+   public void deleteStudent(int id)
+   {
+      try
+       {  
+         Studnet std = entityManager.find(Student.class,id);
+         std.remove(std);
+         System.out.println("Delete Successfully")
+      }
+      catch(EXception ex)
+      {
+       System.out.println("Delete fail");
+       e.printStackTrace();
+      }
+   }
+}
+------------------------------------------------------------------------------
+package in.sp.resource
+
+ @Configuration
+ @EnableTansactionManagement
+ class SpringConfigFile
+ {
+
+    @BEan
+    public DriverManagerDataSource dmDataSource() {
+    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+    dataSource.setUrl("jdbc:mysql://localhost:3306/Spring_jpa);
+    dataSource.setUsername("root);
+    dataSource.setPassword("jdbc:mysql://localhost:3306/Spring_jpa@100);
+    return dataSource;
+}
+
+@Bean
+public LocalContainerEntityManagerFactoryBean lcEntityManagerFactoryBean()
+{
+  LocalContainerEntityManagerFactoryBean lcEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+   lcEntityManagerFactoryBean.setDataSource(dmDataSource());
+   lcEntityManagerFactoryBean.setPackagesToScan("in.sp.entity");
+   lcEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+
+     Properties properties = new Properties();
+     properties.setProperty("hibernate.hbm2ddl.auto", "update");
+     properties.setProperty("hibernate.show_sql", "true");
+   lcEntityManagerFactoryBean.setJpaProperties(properties);
+ return  lcEntityManagerFactoryBean;
+}
+
+@BEan
+public JpaTransactionManager transactionManager (EntityManagerFactory emf){
+     JpaTransactionManager transactionManager = new JpaTransactionManager();
+     transactionManager.setEntityManagerFactoryr(emf);
+     return transactionManager;
+
+}
+
+@Bean
+public StudentDaoImpl stdDaoImpl()
+{
+   return new StudentDaoImpl();
+}
+
+
+------------------------------------------------------
+create main method
+
+main(-)
+{
+ ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfigFile.class);
+ StudnetDao stdDao = (StudentDao)context.getBean("stdDaoImpl");
+
+#Search
+stdDao.searchStudent(2);
+
+#Insert
+Student std = new Student();
+std.setid(1);
+std.setName("Rah");
+std.setRollno(04)
+stdDao.insertStudent(std);
+
+
+#Update
+stdDao.updateStudent(4, 45.66f);
+
+#Delete
+stdDao.deleteStudent(4);
+
+
+
