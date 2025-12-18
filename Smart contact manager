@@ -1,0 +1,31 @@
+Technologies
+
+1. Latest Spring boot
+
+2. Spring Framework
+
+3. Spring MVC
+
+4. Spring Data JPA [ORM]- using database in our project - project database independent
+
+5. OAuth for social Login - for google and github login
+
+6. Thymleaf template engine/jsp
+
+7. Validation
+
+8. Spring Security [spring security ]- for securing routes
+
+9. Mysql database / Postgresql
+
+10. Java email services - for sending and receiving emails
+
+11. AWS/Cloudinary SDK - for storing files
+
+12. Javascript
+
+13. Tailwindcss
+
+14. Flowbite components
+
+15. pdf/excel tools for generating reports
